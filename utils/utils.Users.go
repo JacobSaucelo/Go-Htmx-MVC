@@ -14,7 +14,7 @@ type User models.UserType
 
 var lastID int
 
-func GetUsers() models.UsersType {
+func GetUsers() *Users {
 	saveFile, err := os.Open("./data/data.json")
 	if err != nil {
 		generate := []byte(generateJson())
@@ -38,7 +38,7 @@ func GetUsers() models.UsersType {
 
 	json.Unmarshal(saveByteValue, &usersData)
 
-	return models.UsersType(usersData)
+	return &usersData
 }
 
 func generateJson() string {
@@ -48,11 +48,11 @@ func generateJson() string {
 	return texts
 }
 
-func (u *Users) CreateUser(n string, a string) {
+func (u *Users) CreateUser(n string, a string) User {
 	age, err := strconv.Atoi(a)
 	if err != nil {
 		fmt.Println("Invalid age. Please enter a valid number.")
-		return
+		// return
 	}
 
 	lastID++
@@ -64,8 +64,14 @@ func (u *Users) CreateUser(n string, a string) {
 	}
 
 	u.Users = append(u.Users, models.UserType(slug))
+	fmt.Println("user:", u.Users)
 
 	// add it to db
-
 	fmt.Println("User created successfully.")
+
+	return User{
+		Id:   lastID,
+		Name: n,
+		Age:  age,
+	}
 }

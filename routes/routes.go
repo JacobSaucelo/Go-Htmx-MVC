@@ -13,6 +13,7 @@ var portNumber uint16 = 3000
 func RoutesIndex() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controllers.DisplayUsers)
+	mux.HandleFunc("/add-user/", controllers.AddUser)
 
 	port := strconv.Itoa(int(portNumber))
 
