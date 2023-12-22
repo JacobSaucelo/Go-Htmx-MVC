@@ -18,5 +18,4 @@ func RoutesIndex() {
 
 	fmt.Println("Server: Running on port", port)
 	log.Fatal(http.ListenAndServe(":"+port, mux))
-
 }
