@@ -20,6 +20,17 @@ func DisplayUsers(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, page)
 }
 
+func AddUser(w http.ResponseWriter, r *http.Request) {
+	name := r.PostFormValue("user-name")
+	age := r.PostFormValue("user-age")
+
+	tmpl = template.Must(template.ParseFiles("views/index.html"))
+	// tmpl.ExecuteTemplate(w, "users-list-element", models.UserType{
+	// utils here
+	// })
+
+}
+
 // func (u *Users) AddUser(w http.ResponseWriter, r http.Request) {
 // 	name := r.PostFormValue("user-input-name")
 // 	age := r.PostFormValue("user-input-age")
