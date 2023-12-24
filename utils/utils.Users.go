@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strconv"
 	"webGoCrud/models"
 )
@@ -67,6 +68,21 @@ func (u *Users) CreateUser(n string, a string) User {
 	fmt.Println("user:", u.Users)
 
 	// add it to db
+
+	fPath := filepath.Join("data", "data.json")
+
+	file, fileErr := os.Create(fPath)
+	if fileErr != nil {
+		fmt.Println("error saving file")
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoderErr := encoder.Encode(u)
+	if encoderErr != nil {
+		fmt.Println("Error encoding JSON:", err)
+	}
+
 	fmt.Println("User created successfully.")
 
 	return User{
@@ -74,4 +90,25 @@ func (u *Users) CreateUser(n string, a string) User {
 		Name: n,
 		Age:  age,
 	}
+}
+
+func (u *Users) UpdateUsers(id int, name string, age int) {
+	var foundIndex int = -1
+	// get json file
+
+	for i, user := range u.Users {
+		if user.Id == id {
+			foundIndex = i
+			break
+		}
+	}
+
+	if foundIndex == -1 {
+		fmt.Println("User not found")
+	}
+
+	u.Users[foundIndex].Name = name
+	u.Users[foundIndex].Age = age
+
+	fmt.Println("user updated successfully")
 }
