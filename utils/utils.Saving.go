@@ -9,7 +9,20 @@ import (
 
 type UsersType models.UsersType
 
+var folderName string = "data"
+
+func checkDirExists() {
+	if _, err := os.Stat(folderName); os.IsNotExist(err) {
+		err := os.Mkdir(folderName, os.ModePerm)
+		if err != nil {
+			fmt.Println("error creating data folder", err)
+			return
+		}
+	}
+}
+
 func ReadSaveFile(fPath string) (UsersType, error) {
+	checkDirExists()
 	saveFile, err := os.Open(fPath)
 	if err != nil {
 		fmt.Println("Error Opening save file.")
@@ -29,6 +42,7 @@ func ReadSaveFile(fPath string) (UsersType, error) {
 }
 
 func SaveSFile(fPath string, data UsersType) error {
+	checkDirExists()
 	saveFile, err := os.Create(fPath)
 	if err != nil {
 		fmt.Println("Error creating save file", err)
