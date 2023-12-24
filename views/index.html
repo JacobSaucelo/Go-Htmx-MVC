@@ -18,15 +18,15 @@
         </tr>
         {{ range.Users }} 
             {{ block "users-list-element" .}}
-                <tr>   
+                <tr id="user-{{.Id}}">   
                     <td>{{ .Id }}</td>
                     <td>{{ .Name }}</td>
                     <td>{{ .Age }}</td>
                     <td>
-                        <button hx-post="/delete-user/" hx-trigger="click" hx-vals='{"id": {{.Id}}}'>Delete</button>
+                        <button hx-post="/delete-user/" hx-vals='{"id": {{.Id}}}' hx-swap="delete" hx-target="#user-{{.Id}}">Delete</button>
                     </td>
                 </tr>
-            {{ end  }}
+            {{ end }}
         {{ end }}
     </table>
     

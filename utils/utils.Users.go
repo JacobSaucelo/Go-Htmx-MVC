@@ -99,11 +99,18 @@ func (u *Users) UpdateUser(id int, name string, age int) {
 	fmt.Println("Successfully updated user ", id)
 }
 
-func (u *Users) DeleteUser(id int) {
+// func (u *Users) DeleteUser(id string) Users {
+func (u *Users) DeleteUser(id string) {
 	var foundIndex int = -1
 
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		fmt.Println("Error not a valid id.")
+		return
+	}
+
 	for index, user := range u.Users {
-		if user.Id == id {
+		if user.Id == idInt {
 			foundIndex = index
 			break
 		}
@@ -119,4 +126,5 @@ func (u *Users) DeleteUser(id int) {
 
 	SaveSFile(UsersType(*u))
 	fmt.Println("Successfully removed user ", id)
+
 }

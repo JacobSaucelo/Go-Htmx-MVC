@@ -10,10 +10,10 @@ import (
 
 type Users models.UsersType
 
-var tmpl *template.Template
+// var tmpl *template.Template
+var tmpl = template.Must(template.ParseFiles("views/index.html"))
 
 func DisplayUsers(w http.ResponseWriter, r *http.Request) {
-	tmpl = template.Must(template.ParseFiles("views/index.html"))
 	page := utils.GetUsers()
 
 	fmt.Println("page: ", page)
@@ -27,7 +27,7 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 
 	response := userData.CreateUser(name, age)
 
-	tmpl = template.Must(template.ParseFiles("views/index.html"))
+	// tmpl = template.Must(template.ParseFiles("views/index.html"))
 	tmpl.ExecuteTemplate(w, "users-list-element", models.UserType{
 		Id:   response.Id,
 		Name: response.Name,
@@ -36,10 +36,13 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-
+	userData := utils.GetUsers()
 	userId := r.FormValue("id")
-	fmt.Println("userId: ", userId)
-	// userData := utils.GetUsers()
+	userData.DeleteUser(userId)
+
+	// fmt.Println("userId: ", response)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+
 }
 
 // func (u *Users) AddUser(w http.ResponseWriter, r http.Request) {
