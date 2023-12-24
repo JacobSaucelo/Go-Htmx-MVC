@@ -76,7 +76,7 @@ func (u *Users) CreateUser(n string, a string) User {
 	}
 }
 
-func (u *Users) UpdateUsers(id int, name string, age int) {
+func (u *Users) UpdateUser(id int, name string, age int) {
 	var foundIndex int = -1
 	// get json file
 
@@ -88,11 +88,35 @@ func (u *Users) UpdateUsers(id int, name string, age int) {
 	}
 
 	if foundIndex == -1 {
-		fmt.Println("User not found")
+		fmt.Println("User not found.")
 	}
 
 	u.Users[foundIndex].Name = name
 	u.Users[foundIndex].Age = age
 
-	fmt.Println("user updated successfully")
+	// SaveSFile(UsersType(*u))
+
+	fmt.Println("Successfully updated user ", id)
+}
+
+func (u *Users) DeleteUser(id int) {
+	var foundIndex int = -1
+
+	for index, user := range u.Users {
+		if user.Id == id {
+			foundIndex = index
+			break
+		}
+	}
+
+	if foundIndex == -1 {
+		fmt.Println("User not found.")
+		return
+	}
+
+	u.Users[foundIndex] = u.Users[len(u.Users)-1]
+	u.Users = u.Users[:len(u.Users)-1]
+
+	SaveSFile(UsersType(*u))
+	fmt.Println("Successfully removed user ", id)
 }
