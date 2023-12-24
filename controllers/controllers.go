@@ -35,6 +35,13 @@ func AddUser(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+
+	userId := r.FormValue("id")
+	fmt.Println("userId: ", userId)
+	// userData := utils.GetUsers()
+}
+
 // func (u *Users) AddUser(w http.ResponseWriter, r http.Request) {
 // 	name := r.PostFormValue("user-input-name")
 // 	age := r.PostFormValue("user-input-age")

@@ -14,6 +14,7 @@
             <th>id</th>
             <th>name</th>
             <th>age</th>
+            <th>action</th>
         </tr>
         {{ range.Users }} 
             {{ block "users-list-element" .}}
@@ -21,6 +22,9 @@
                     <td>{{ .Id }}</td>
                     <td>{{ .Name }}</td>
                     <td>{{ .Age }}</td>
+                    <td>
+                        <button hx-post="/delete-user/" hx-trigger="click" hx-vals='{"id": {{.Id}}}'>Delete</button>
+                    </td>
                 </tr>
             {{ end  }}
         {{ end }}

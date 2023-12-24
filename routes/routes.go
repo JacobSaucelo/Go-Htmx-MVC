@@ -14,6 +14,7 @@ func RoutesIndex() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", controllers.DisplayUsers)
 	mux.HandleFunc("/add-user/", controllers.AddUser)
+	mux.HandleFunc("/delete-user/", controllers.DeleteUser)
 
 	port := strconv.Itoa(int(portNumber))
 
