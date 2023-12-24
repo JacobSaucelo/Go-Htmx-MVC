@@ -68,6 +68,7 @@ func (u *Users) CreateUser(n string, a string) User {
 	fmt.Println("user:", u.Users)
 
 	// add it to db
+	SaveSFile(UsersType(*u))
 
 	fPath := filepath.Join("data", "data.json")
 

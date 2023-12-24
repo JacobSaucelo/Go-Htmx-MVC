@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"webGoCrud/models"
 )
 
 type UsersType models.UsersType
 
 var folderName string = "data"
+var fileName string = "data.json"
 
 func checkDirExists() {
 	if _, err := os.Stat(folderName); os.IsNotExist(err) {
@@ -21,8 +23,10 @@ func checkDirExists() {
 	}
 }
 
-func ReadSaveFile(fPath string) (UsersType, error) {
+func ReadSaveFile() (UsersType, error) {
 	checkDirExists()
+	fPath := filepath.Join(folderName, fileName)
+
 	saveFile, err := os.Open(fPath)
 	if err != nil {
 		fmt.Println("Error Opening save file.")
@@ -41,8 +45,10 @@ func ReadSaveFile(fPath string) (UsersType, error) {
 	return save, nil
 }
 
-func SaveSFile(fPath string, data UsersType) error {
+func SaveSFile(data UsersType) error {
 	checkDirExists()
+	fPath := filepath.Join(folderName, fileName)
+
 	saveFile, err := os.Create(fPath)
 	if err != nil {
 		fmt.Println("Error creating save file", err)
