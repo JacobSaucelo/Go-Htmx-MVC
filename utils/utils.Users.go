@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 	"strconv"
 	"webGoCrud/models"
 )
@@ -69,22 +68,6 @@ func (u *Users) CreateUser(n string, a string) User {
 
 	// add it to db
 	SaveSFile(UsersType(*u))
-
-	fPath := filepath.Join("data", "data.json")
-
-	file, fileErr := os.Create(fPath)
-	if fileErr != nil {
-		fmt.Println("error saving file")
-	}
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	encoderErr := encoder.Encode(u)
-	if encoderErr != nil {
-		fmt.Println("Error encoding JSON:", err)
-	}
-
-	fmt.Println("User created successfully.")
 
 	return User{
 		Id:   lastID,
